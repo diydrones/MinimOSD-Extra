@@ -54,6 +54,16 @@ void read_mavlink(){
             switch(msg.msgid) {
             case MAVLINK_MSG_ID_HEARTBEAT:
                 {
+                    if((msg.compid != 1) && (msg.compid != 50)){
+                        //MAVMSG not from ardupilot(component ID:1) or pixhawk(component ID:50)
+                        break;
+                    }
+
+                    uint8_t mavtype = mavlink_msg_heartbeat_get_type(&msg);
+                    if(mavtype == 6){
+                        // MAVMSG from GCS
+                        break;
+                    }
                     mavbeat = 1;
                     apm_mav_system    = msg.sysid;
                     apm_mav_component = msg.compid;
