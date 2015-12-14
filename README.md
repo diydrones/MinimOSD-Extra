@@ -1,5 +1,5 @@
-# MinimOSD-Extra
-MinimOSD-Extra
+# MinimOSD-Extra-Merlin
+MinimOSD-Extra-Merlin
 
 MinimOSD_Extra_Plane_Pre_release_Beta was improved, see
 MinimOSD_Extra_Plane_Pre_release_Beta/README.txt
