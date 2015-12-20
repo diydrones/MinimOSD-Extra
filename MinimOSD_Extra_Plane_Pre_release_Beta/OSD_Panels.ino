@@ -489,9 +489,9 @@ void panOff(){
       // Rotation switch
       else {
 	// Switch changed from its last position
-	if (abs (ch_raw - ch_raw_prev1) > 200) {
+	if (abs (ch_raw - ch_raw_prev1) > 100) {
 	  // but is the same than 2 positions ago
-	  if (abs (ch_raw - ch_raw_prev2) < 200) {
+	  if (abs (ch_raw - ch_raw_prev2) < 100) {
 	    osd.closePanel();
 	    // and it's been less than 1 sec since the position switch and back
 	    if (osd_switch_time + 1000 > millis()) {
