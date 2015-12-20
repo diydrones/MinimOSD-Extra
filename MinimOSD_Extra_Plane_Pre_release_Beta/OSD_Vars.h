@@ -38,19 +38,12 @@ static uint16_t     ch_raw = 0;
 // keep track of whether the channel rotation switch moved from its last position and back
 static uint16_t     ch_raw_prev1 = 0;
 static uint16_t     ch_raw_prev2 = 0;
-//static uint16_t     chan1_raw = 0;
-//static uint16_t     chan2_raw = 0;
-//static uint16_t     chan3_raw = 0;
-//static uint16_t     chan4_raw = 0;
-static uint16_t     chan5_raw = 0;
-static uint16_t     chan6_raw = 0;
-static uint16_t     chan7_raw = 0;
-static uint16_t     chan8_raw = 0;
+// FIXME slots 0-4 aren't used, 10 bytes of var space lost to save on program space
+static uint16_t     chan_raw[9];
 //static uint16_t     chan1_raw_middle = 0;
 //static uint16_t     chan2_raw_middle = 0;
 
 static uint8_t      ch_toggle = 0;
-static uint8_t      check_warning = 1;
 //static boolean      osd_set = 0;
 static boolean      switch_mode = 0;
 static boolean      takeofftime = 0;
@@ -90,14 +83,11 @@ static unsigned long mavLinkTimer = 0;
 static unsigned long runt =0;
 static unsigned long FTime = 0;
 //static unsigned long CallSignBlink = 0;
-static unsigned long landed = 4294967295;
+static unsigned long landed = 4294967295LL;
 
 //static uint8_t      warning_type = 0;
 static char*        warning_string;
-static boolean      warning_found = 0;
 static boolean      canswitch = 1;
-static uint8_t      osd_off_switch = 0;
-static uint8_t      osd_switch_last = 100;
 static uint8_t      rotation = 0;
 static unsigned long         osd_switch_time = 0;
 //static unsigned long         descendt = 0;
@@ -129,7 +119,7 @@ static float        glide = 0;
 static float        osd_alt = 0;                    // altitude
 static float        osd_airspeed = 0;              // airspeed
 static float        osd_windspeed = 0;
-static float        osd_windspeedz = 0;
+//static float        osd_windspeedz = 0;
 static float        osd_winddirection = 0;
 static int8_t       osd_wind_arrow_rotate_int;
 static int8_t       osd_COG_arrow_rotate_int;
@@ -164,7 +154,6 @@ static byte     climbchar = 0;
 //static byte     signLon = 0x20;
 
 
-static float     convertt = 0;
 //Call sign variables
 static char         char_call[OSD_CALL_SIGN_TOTAL+1] = {0};
 
@@ -176,11 +165,11 @@ static boolean      mavbeat = 0;
 //static boolean      iconMSL = 0;
 //static boolean      landing = 0;
 static float        lastMAVBeat = 0;
-static boolean      waitingMAVBeats = 1;
+//static boolean      waitingMAVBeats = 1;
 //static uint8_t      apm_mav_type;
 static uint8_t      apm_mav_system; 
 static uint8_t      apm_mav_component;
-static boolean      enable_mav_request = 0;
+//static boolean      enable_mav_request = 0;
 static boolean      blinker = 0;
 static boolean      one_sec_timer_switch = 0;
 
