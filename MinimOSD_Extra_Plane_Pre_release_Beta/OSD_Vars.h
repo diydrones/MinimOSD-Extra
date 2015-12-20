@@ -35,9 +35,9 @@ static uint8_t      panel_auto_switch=0;
 static bool         ma = 0;
 static bool         osd_clear = 0;
 static uint16_t     ch_raw = 0;
-// keep track of whether the channel rotation switch moved from its last position (out of top/middle/bottom)
-static uint8_t     ch_rot_pos = 0;
-static uint8_t     ch_last_rot_pos = 0;
+// keep track of whether the channel rotation switch moved from its last position and back
+static uint16_t     ch_raw_prev1 = 0;
+static uint16_t     ch_raw_prev2 = 0;
 //static uint16_t     chan1_raw = 0;
 //static uint16_t     chan2_raw = 0;
 //static uint16_t     chan3_raw = 0;

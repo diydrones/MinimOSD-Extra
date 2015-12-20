@@ -7,6 +7,16 @@ You can rotate the OSD by flipping the switch to any other state and leaving it
 there or coming back to the original location within 2 seconds.
 Binary sketch size: 30,656 bytes (of a 30,720 byte maximum)
 
+R807 - 2015/12/19 - Marc MERLIN <marc_soft@merlins.org>
+Previous rotation switch didn't quite work as well as I was hoping. This new
+one will rotate OSD if you flip to any other position more than 200ms away from
+the current one, and come back within less than 1 second.
+This should work with all switches and positions and allows you to use
+another switch and activate a function you don't want, but only for
+a fraction for a second, come back, and generate an OSD flip in the
+process.
+30,718 bytes (of a 30,720 byte maximum) (pfew :) ) 
+
 
 Build
 -----

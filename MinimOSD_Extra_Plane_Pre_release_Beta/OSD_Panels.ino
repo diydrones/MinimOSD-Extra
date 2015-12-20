@@ -10,7 +10,7 @@ void startPanels(){
 void panLogo(){
     osd.setPanel(5, 5);
     osd.openPanel();
-    osd.printf_P(PSTR("MinimOSD-Extra 2.4|Plane r806"));
+    osd.printf_P(PSTR("MinimOSD-Extra 2.4|Plane r807"));
     osd.closePanel();
 }
 
@@ -486,24 +486,29 @@ void panOff(){
           panel = npanels; //off panel
         }
       }
-      //Rotation switch
-      else{
-	if (ch_raw < 1233) ch_rot_pos = 1;
-	else if (ch_raw < 1467) ch_rot_pos = 2;
-	else ch_rot_pos = 3;
-	// Init to first switch position after boot
-	if (! ch_last_rot_pos) ch_last_rot_pos = ch_rot_pos;
-	// Rotate for any switch change (once per second at most) 
-	if (ch_last_rot_pos != ch_rot_pos)
-          // Wait 2 sec to allow the user to leave the switch in the new position
-          // or revert to the old position. This allows using a switch with another function
-          // (lights/buzzer/etc) to rotate the OSD with a state flip without having a new state
-          // rotate the OSD forever.
-          if (osd_switch_time + 2000 < millis()){
-            rotatePanel = 1;
-            osd_switch_time = millis();
-	    ch_last_rot_pos = ch_rot_pos;
-          }
+      // Rotation switch
+      else {
+	// Switch changed from its last position
+	if (abs (ch_raw - ch_raw_prev1) > 200) {
+	  // but is the same than 2 positions ago
+	  if (abs (ch_raw - ch_raw_prev2) < 200) {
+	    osd.closePanel();
+	    // and it's been less than 1 sec since the position switch and back
+	    if (osd_switch_time + 1000 > millis()) {
+	      // then rotate
+	      rotatePanel = 1;
+	    }
+	    // stop continuous rotation, forcing a switch flip to restart the process
+	    // or if the flip didn't happen because it happened too slowly, reset too.
+	    ch_raw_prev2 = 0;
+	  } else {
+	    osd_switch_time = millis();
+	    // If position changed and is different from what it was 2 positions ago
+	    // record the new state
+	    ch_raw_prev2 = ch_raw_prev1;
+	    ch_raw_prev1 = ch_raw;
+	  }
+	}
       }    
     }
     if(rotatePanel == 1){
