@@ -182,7 +182,7 @@ void loop()
         //osd.printf_P(PSTR("Requesting DataStreams...")); 
         //osd.closePanel();
         //for(int n = 0; n < 3; n++){
-        //    request_mavlink_rates();//Three times to certify it will be readed
+        //    request_mavlink_rates();//Three times to certify it will be read
         //    delay(50);
         //}
         enable_mav_request = 0;
