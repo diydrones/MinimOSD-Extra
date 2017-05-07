@@ -10,7 +10,7 @@ void startPanels(){
 void panLogo(){
     osd.setPanel(5, 5);
     osd.openPanel();
-    osd.printf_P(PSTR("MinimOSD-Extra 2.4|Plane r805"));
+    osd.printf_P(PSTR("MinimOSD-Extra 2.4|Plane r807"));
     osd.closePanel();
 }
 
@@ -486,13 +486,29 @@ void panOff(){
           panel = npanels; //off panel
         }
       }
-      //Rotation switch
-      else{
-        if (ch_raw > 1200)
-          if (osd_switch_time + 1000 < millis()){
-            rotatePanel = 1;
-            osd_switch_time = millis();
-        }
+      // Rotation switch
+      else {
+	// Switch changed from its last position
+	if (abs (ch_raw - ch_raw_prev1) > 100) {
+	  // but is the same than 2 positions ago
+	  if (abs (ch_raw - ch_raw_prev2) < 100) {
+	    osd.closePanel();
+	    // and it's been less than 1 sec since the position switch and back
+	    if (osd_switch_time + 1000 > millis()) {
+	      // then rotate
+	      rotatePanel = 1;
+	    }
+	    // stop continuous rotation, forcing a switch flip to restart the process
+	    // or if the flip didn't happen because it happened too slowly, reset too.
+	    ch_raw_prev2 = 0;
+	  } else {
+	    osd_switch_time = millis();
+	    // If position changed and is different from what it was 2 positions ago
+	    // record the new state
+	    ch_raw_prev2 = ch_raw_prev1;
+	    ch_raw_prev1 = ch_raw;
+	  }
+	}
       }    
     }
     if(rotatePanel == 1){
@@ -703,7 +719,7 @@ void panWarn(int first_col, int first_line){
 //              }
             rotation++;
           
-          // Auto switch decesion
+          // Auto switch decision
           if (warning[0] == 1 && panel_auto_switch < 3){
           canswitch = 0;  
           }else if (ch_raw < 1200) {
