@@ -8,6 +8,9 @@ Build
 3) Select board Arduino Nano/ATmega328
 4) build and upload
 
+For this to work well (it can still work ok-ish without), it's better to set SR1_RC_CHAN 5 
+(although it can work with the default of 2, it's just more picky about timing). 
+If your OSD board is plugged into serial2 instead of serial2, then change SR2 instead.
 
 Changelog
 ---------
